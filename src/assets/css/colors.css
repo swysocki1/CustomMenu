@@ -1,0 +1,249 @@
+
+/* Color Helper */
+.snow {
+  color: #fff !important;
+  text-shadow: 1px 1px 1px #000 !important;
+}
+.snow-fill {
+  fill: #fff !important;
+  background-color: #fff !important;
+}
+.snow-fill-hover:hover {
+  fill: #fff !important;
+  background-color: #fff !important;
+}
+.snow-1 {
+  color: rgba(255, 255, 255,.95) !important;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0,.95) !important;
+}
+.snow-1-fill {
+  fill: rgba(255, 255, 255,.95) !important;
+  background-color: rgba(255, 255, 255,.95) !important;
+}
+
+.snow-2 {
+  color: rgba(255, 255, 255,.90) !important;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0,.90) !important;
+}
+.snow-2-fill {
+  fill: rgba(255, 255, 255,.90) !important;
+  background-color: rgba(255, 255, 255,.90) !important;
+}
+
+.snow-3 {
+  color: rgba(255, 255, 255,.85) !important;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0,.85) !important;
+}
+.snow-3-fill {
+  fill: rgba(255, 255, 255,.85) !important;
+  background-color: rgba(255, 255, 255,.85) !important;
+}
+
+.snow-4 {
+  color: rgba(255, 255, 255,.80) !important;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0,.80) !important;
+}
+.snow-4-fill {
+  fill: rgba(255, 255, 255,.80) !important;
+  background-color: rgba(255, 255, 255,.80) !important;
+}
+.snow-5 {
+  color: rgba(255, 255, 255,.75) !important;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0,.75) !important;
+}
+.snow-5-fill {
+  fill: rgba(255, 255, 255,.75) !important;
+  background-color: rgba(255, 255, 255,.75) !important;
+}
+
+.grey1 {
+  color: #eee !important;
+  text-shadow: 1px 1px 1px #111 !important;
+}
+.grey1-fill {
+  fill: #eee !important;
+  background-color: #eee !important;
+}
+.grey1-fill-hover:hover {
+  fill: #eee !important;
+  background-color: #eee !important;
+}
+.grey2 {
+  color: #ddd !important;
+  text-shadow: 1px 1px 1px #222 !important;
+}
+.grey2-fill {
+  fill: #ddd !important;
+  background-color: #ddd !important;
+}
+.grey2-fill-hover:hover {
+  fill: #ddd !important;
+  background-color: #ddd !important;
+}
+.grey3 {
+  color: #ccc !important;
+  text-shadow: 1px 1px 1px #333 !important;
+}
+.grey3-fill {
+  fill: #ccc !important;
+  background-color: #ccc !important;
+}
+.grey3-fill-hover:hover {
+  fill: #ccc !important;
+  background-color: #ccc !important;
+}
+.grey4 {
+  color: #bbb !important;
+  text-shadow: 1px 1px 1px #444 !important;
+}
+.grey4-fill {
+  fill: #bbb !important;
+  background-color: #bbb !important;
+}
+.grey4-fill-hover:hover {
+  fill: #bbb !important;
+  background-color: #bbb !important;
+}
+.grey5 {
+  color: #aaa !important;
+  text-shadow: 1px 1px 1px #555 !important;
+}
+.grey5-fill {
+  fill: #aaa !important;
+  background-color: #aaa !important;
+}
+.grey5-fill-hover:hover {
+  fill: #aaa !important;
+  background-color: #aaa !important;
+}
+/*TODO more Greys*/
+.coal {
+  color: #000 !important;
+  text-shadow: 1px 1px 1px #fff !important;
+}
+.coal-fill {
+  fill: #000 !important;
+  background-color: #000 !important;
+}
+.coal-fill-hover:hover {
+  fill: #000 !important;
+  background-color: #000 !important;
+}
+.coal-1 {
+  color: rgba(0, 0, 0,.95) !important;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255,.95) !important;
+}
+.coal-1-fill {
+  fill: rgba(0, 0, 0,.95) !important;
+  background-color: rgba(0, 0, 0,.95) !important;
+}
+
+.red {
+  color: #e24037 !important;
+  text-shadow: 1px 1px 1px #000 !important;
+}
+.red-fill {
+  fill: #e24037 !important;
+  background-color: #e24037 !important;
+}
+.red-fill-hover:hover {
+  fill: #e24037 !important;
+  background-color: #e24037 !important;
+}
+.leaf-green {
+  color: #248f24 !important;
+  text-shadow: 1px 1px 1px #000 !important;
+}
+.leaf-green-fill {
+  fill: #248f24 !important;
+  background-color: #248f24 !important;
+}
+
+.azure {
+  color: #3cc !important;
+  text-shadow: 1px 1px 1px #000 !important;
+}
+.azure-fill {
+  fill: #3cc !important;
+  background: #3cc !important;
+}
+.blush {
+  color: #ff5050 !important;
+  text-shadow: 1px 1px 1px #000 !important;
+}
+.blush-fill {
+  fill: #ff5050 !important;
+  background: #ff5050 !important;
+}
+.lavender {
+  color: #c9f !important;
+  text-shadow: 1px 1px 1px #000 !important;
+}
+.lavender-fill {
+  fill: #c9f !important;
+  background: #c9f !important;
+}
+.mint {
+  color: #0fc !important;
+  text-shadow: 1px 1px 1px #000 !important;
+}
+.mint-fill {
+  fill: #0fc !important;
+  background: #0fc !important;
+}
+.seafoam {
+  color: #099 !important;
+  text-shadow: 1px 1px 1px #000 !important;
+}
+.seafoam-fill {
+  fill: #099 !important;
+  background: #099 !important;
+}
+.tiger {
+  color: #fc6 !important;
+  text-shadow: 1px 1px 1px #000 !important;
+}
+.tiger-fill {
+  fill: #fc6 !important;
+  background: #fc6 !important;
+}
+.cream {
+  color: #FFFDD0 !important;
+  text-shadow: 1px 1px 1px #000 !important;
+}
+.cream-fill {
+  fill: #FFFDD0 !important;
+  background: #FFFDD0 !important;
+}
+.gold {
+  color: #FFD700 !important;
+  text-shadow: 1px 1px 1px #000 !important;
+}
+.gold-fill {
+  fill: #FFD700 !important;
+  background: #FFD700 !important;
+}
+.facebook:hover .fa-facebook {
+  /*color: #fff !important;*/
+  /*text-shadow: 1px 1px 1px #4267b2 !important;*/
+  /*background-color: #4267b2;*/
+  /*fill: #4267b2;*/
+}
+.twitter:hover .twitter {
+  /*color: #00aced !important;*/
+  /*text-shadow: 1px 1px 1px #fff !important;*/
+  /*background-color: #fff;*/
+  /*fill: #fff;*/
+}
+.instagram:hover .fa-instagram {
+  /*color: #fff !important;*/
+  /*text-shadow: 1px 1px 1px #4267b2 !important;*/
+  /*background-color: #4267b2;*/
+  /*fill: #4267b2;*/
+}
+.youtube:hover .fa-youtube {
+  /*color: #ff0000 !important;*/
+  /*text-shadow: 1px 1px 1px #fff !important;*/
+  /*background-color: #fff;*/
+  /*fill: #fff;*/
+}
