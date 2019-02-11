@@ -52,4 +52,5 @@ export class ValidationService {
   isFieldValid(form: FormGroup, field: string) {
     return form.get(field).valid;
   }
+  passwordQualifications = '--- List of requirements for password should be here ---';
 }

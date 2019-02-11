@@ -9,11 +9,13 @@ import {LoginComponent} from './components/login/login.component';
 import {NavbarComponent} from './components/navbar/navbar.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
+import {SignupComponent} from './components/signup/signup.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    SignupComponent,
     NavbarComponent
   ],
   imports: [

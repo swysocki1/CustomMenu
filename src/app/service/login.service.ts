@@ -20,6 +20,13 @@ export class LoginService {
     this._user = user;
     this.getUserUpdates.emit(user);
   }
+  createAccount(user: User, password: string) {
+    return new Observable(subscriber => {
+      user.id = 'abc123';
+      subscriber.next(user);
+      subscriber.complete();
+    });
+  }
   login(username: string, password: string): Observable<User> {
     return new Observable(subscriber => {
       subscriber.next(this.getTestUser());
