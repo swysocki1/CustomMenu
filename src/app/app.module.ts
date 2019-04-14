@@ -10,13 +10,16 @@ import {NavbarComponent} from './components/navbar/navbar.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {SignupComponent} from './components/signup/signup.component';
+import {MenuComponent} from './components/menu/menu.component';
+import {MenuService} from './service/menu.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SignupComponent,
-    NavbarComponent
+    NavbarComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +28,7 @@ import {SignupComponent} from './components/signup/signup.component';
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [LoginService, ValidationService],
+  providers: [LoginService, ValidationService, MenuService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

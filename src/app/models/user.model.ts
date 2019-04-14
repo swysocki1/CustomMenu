@@ -17,7 +17,7 @@ export class Reservation {
 export class Resturant {
   id: string;
   name: string;
-  menus: Menu[];
+  menus: string[];
   owners: string[];
 }
 
@@ -52,4 +52,14 @@ export class AddOn {
   description: string;
   imgSrc: string;
   price: number;
+}
+
+export class CartItem {
+  id: string;
+  item: Food;
+  qty: number;
+  constructor(foodItem: Food) {
+    this.item = foodItem;
+    this.qty = 1;
+  }
 }

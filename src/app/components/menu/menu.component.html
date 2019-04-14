@@ -1,0 +1,26 @@
+<div class="container-fluid">
+  <div class="menu-region">
+    <div class="title-region">
+
+    </div>
+    <div *ngFor="let section of menu.sections" class="menu-section-region">
+
+    </div>
+  </div>
+  <div class="cart-region active h-100">
+    <div *ngIf="!cart || cart.length === 0">
+      <span class="text-muted">Your Cart is EMPTY!</span>
+    </div>
+    <div *ngIf="cart && cart.length > 0">
+      <div *ngFor="let item of cart" class="cart-item row">
+        <div class="col-1" (click)="removeCartItem(item)"> X </div>
+        <div class="col-8">
+          <span>{{item.name}}</span>
+        </div>
+        <div class="col-3 text-right">
+          <span>${{item.price | number:'.2'}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

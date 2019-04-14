@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {LoginComponent} from './components/login/login.component';
 import {SignupComponent} from './components/signup/signup.component';
+import {MenuComponent} from './components/menu/menu.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -9,7 +10,7 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   // { path: 'menu/builder/:id', component: MenuBuilderComponent },
   // { path: 'menu/preview/:id', component: CustomMenuComponent },
-  // { path: 'menu/:id', component: CustomMenuComponent },
+  { path: 'menu/:id', component: MenuComponent },
   // { path: 'menu/search, component: CustomMenuComponent },
   { path: '**', redirectTo: '/login' },
 ];

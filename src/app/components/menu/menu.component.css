@@ -1,0 +1,10 @@
+.cart-region {
+
+}
+.cart-region.active {
+  width: 20%;
+  position: sticky;
+  z-index: 1000;
+  background-color: black;
+  float: right;
+}
