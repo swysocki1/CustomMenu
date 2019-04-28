@@ -5,43 +5,32 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import * as moment from 'moment';
 import {HttpClient} from '@angular/common/http';
-import {Menu, Resturant, User} from '../models/user.model';
+import {Menu, Restaurant, User} from '../models/user.model';
 import {Observable, Subscription} from 'rxjs';
+import {DataService} from './data.service';
 
 @Injectable()
 export class MenuService {
-  constructor(private http: HttpClient) { }
-  getMenuById(id: string): Observable<Menu> {
-    // TODO
+  constructor(private http: HttpClient, private data: DataService) { }
+  getMenu(id: number) {
+    return this.data.getMenu(id);
+  }
+  getRestaurantByMenuId(id: number): Observable<Restaurant> {
     return new Observable(subscriber => {
-      const menu = this.getTestMenu();
-      menu.id = id;
-      subscriber.next(menu);
-      subscriber.complete();
+      this.data.getMenu(id).subscribe((menu: Menu) => {
+        if (menu && menu.restaurant) {
+          this.data.getRestaurant(menu.restaurant).subscribe((restaurant: Restaurant) => {
+            subscriber.next(restaurant);
+            subscriber.complete();
+          });
+        } else {
+          subscriber.error('Menu Restaurant Could Not Be Found');
+          subscriber.complete();
+        }
+      }, error => {
+        subscriber.error(error);
+        subscriber.complete();
+      });
     });
-  }
-  getResturantByMenuId(id: string) {
-    // TODO
-    return new Observable(subscriber => {
-      const resturant = this.getTestResturant();
-      resturant.menus.push(id);
-      subscriber.next(resturant);
-      subscriber.complete();
-    });
-  }
-  private getTestMenu() {
-    const menu = new Menu();
-    menu.id = 'test-id';
-    menu.name = 'Resturant Name';
-    menu.description = 'Here is a loong  loong loong loong loong loong  loong loong  ô long lo';
-    return menu;
-  }
-  private getTestResturant(): Resturant {
-    const resturant = new Resturant();
-    resturant.menus = ['testabc', '123idk'];
-    resturant.name = 'TEST Resrurant';
-    resturant.owners = ['testownder'];
-    resturant.id = 'test-resturantid';
-    return resturant;
   }
 }

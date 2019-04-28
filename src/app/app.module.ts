@@ -12,6 +12,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {SignupComponent} from './components/signup/signup.component';
 import {MenuComponent} from './components/menu/menu.component';
 import {MenuService} from './service/menu.service';
+import {DataService} from './service/data.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import {MenuService} from './service/menu.service';
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [LoginService, ValidationService, MenuService],
+  providers: [LoginService, ValidationService, MenuService, DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,14 +1,73 @@
 <div class="container-fluid">
-  <div class="menu-region">
-    <div class="title-region">
-
+  <div class="restaurant-region mt-5">
+    <div class="title-region jumbotron-fluid">
+      <h1 class="col-8 offset-2 text-center">{{restaurant?.name}}</h1>
+      <p class="col-8 offset-2 lead">{{restaurant?.description}}</p>
     </div>
-    <div *ngFor="let section of menu.sections" class="menu-section-region">
 
+
+    <nav *ngIf="restaurant?.menus?.length > 1" class="col-8 offset-2">
+      <ul class="nav nav-tabs">
+        <li class="nav-item" *ngFor="let menu of restaurant?.menus" [ngClass]="{'dropdown': menu?.sections?.length > 1}">
+          <a *ngIf="menu?.sections?.length <= 1" class="nav-link" [ngClass]="{'active': menu?.id === selectedMenu}"
+             [id]="'nav-menu-' + menu?.id" (click)="loadMenu(menu?.id)">{{menu?.name}}</a>
+          <a *ngIf="menu?.sections?.length > 1" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+             aria-haspopup="true" aria-expanded="false" [ngClass]="{'active': menu?.id === selectedMenu}" (click)="loadMenu(menu?.id)">{{menu?.name}}</a>
+          <div *ngIf="menu?.sections?.length > 1" class="dropdown-menu">
+            <a class="dropdown-item" *ngFor="let section of menu?.sections" (click)="selectMenuSection(menu, section)">{{section?.name}}</a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+      <div *ngFor="let menu of restaurant?.menus" class="tab-pane menu-region py-5" [id]="'tab-menu-' + menu?.id" role="tabpanel" [ngClass]="{'fade show active': menu?.id === selectedMenu}">
+        <h2 class="text-center menu-name col-8 offset-2">{{menu.name}}</h2>
+        <hr class="m-2">
+        <p class="lead col-8 offset-2 menu-description">{{menu?.description}}</p>
+        <div class="row menu-section-region mb-5" *ngFor="let section of menu?.sections;let i = index">
+          <div class="col-10 offset-1">
+            <h3 class="menu-section-name">{{section?.name}}</h3>
+            <hr class="my-2">
+            <p class="lead">{{section?.description}}</p>
+            <div class="row food-region">
+              <div class="col-6" *ngFor="let food of section?.foods">
+                <div class="card pointer">
+                  <img [src]="food?.imgSrc" *ngIf="food?.imgSrc" class="card-img-top">
+                  <div class="card-body">
+                    <h4 class="food-name" style="display: inline-block;">{{food?.name}}</h4>
+                    <b class="pull-right" style="display: inline-block;" *ngIf="food?.price">${{food?.price | number:'0.2'}}</b>
+                    <b class="pull-right" *ngIf="!food?.price">FREE</b>
+                    <hr class="my-2">
+                    <p class="lead">{{food?.description}}</p>
+                    <!--<button class="btn btn-primary" *ngIf="food?.addOns?.length > 0" type="button" data-toggle="collapse" [attr.data-target]="'#food-addon-region-'+menu.id+'-'+section.id+'-'+food.id" aria-expanded="false" aria-controls="collapseExample">-->
+                      <!--Button with data-target-->
+                    <!--</button>-->
+                    <i *ngIf="food?.addOns?.length > 0" class="fas fa-chevron-down" data-toggle="collapse" [attr.data-target]="'#food-addon-region-'+menu.id+'-'+section.id+'-'+food.id" aria-expanded="false" aria-controls="collapseExample"></i>
+                    <span *ngIf="food?.addOns?.length > 0"> Additions</span>
+                    <div class="collapse addon-region" [id]="'food-addon-region-'+menu.id+'-'+section.id+'-'+food.id">
+                      <div class="mx-1 my-1" *ngFor="let addon of food.addOns">
+                        <span class="addon-name">{{addon?.name}}</span>
+                        <span *ngIf="addon?.description"> - {{addon?.description}}</span>
+                        <!--<i [attr.tooltip]="addon?.description" class="fas fa-fw fa-info-circle"></i>-->
+                        <b class="pull-right" *ngIf="addon?.price">${{addon?.price | number:'0.2'}}</b>
+                        <b class="pull-right" *ngIf="!addon?.price">FREE</b>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+
+
   </div>
-  <div class="cart-region active h-100">
-    <div *ngIf="!cart || cart.length === 0">
+  <div class="cart-region h-100">
+    <!-- <div *ngIf="!cart || cart.length === 0">
       <span class="text-muted">Your Cart is EMPTY!</span>
     </div>
     <div *ngIf="cart && cart.length > 0">
@@ -21,6 +80,6 @@
           <span>${{item.price | number:'.2'}}</span>
         </div>
       </div>
-    </div>
+    </div>-->
   </div>
 </div>

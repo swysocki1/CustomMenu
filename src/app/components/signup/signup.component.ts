@@ -50,8 +50,9 @@ export class SignupComponent implements OnInit {
       newUser.email = this.account.value.username;
       newUser.firstName = this.account.value.username;
       newUser.lastName = this.account.value.username;
-      
-      this.ls.createAccount(newUser, this.account.value.password).subscribe((user: User) => {
+      newUser.password = this.account.value.password;
+
+      this.ls.createAccount(newUser).subscribe((user: User) => {
         this.router.navigate(['/']);
         // TODO go to New User Signup Flow
       }, error => {

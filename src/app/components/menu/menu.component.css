@@ -1,5 +1,21 @@
-.cart-region {
+/** MENU REGION **/
+.menu-region{
+  background-color: #ddd;
+}
+.menu-description {
+  text-align: justify;
+  text-align-last: center;
+}
 
+.food-region .col-6 {
+  padding: .1rem;
+}
+.food-region .card {
+  min-height: 100%;
+}
+/** CART REGION **/
+.cart-region {
+  display: none;
 }
 .cart-region.active {
   width: 20%;
@@ -7,4 +23,5 @@
   z-index: 1000;
   background-color: black;
   float: right;
+  display: inline-block;
 }

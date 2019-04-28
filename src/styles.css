@@ -2,3 +2,10 @@
 .main {
   padding-top: 57px;
 }
+.pointer:hover {
+  cursor: pointer;
+}
+.container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+}
