@@ -27,7 +27,8 @@ export class LoginService {
   login(username: string, password: string): Observable<User> {
     return new Observable(subscriber => {
       this.data.authenticate(username, password).subscribe(res => {
-        subscriber.next(new User(res));
+        this.updateUser(new User(res));
+        subscriber.next(this._user);
         subscriber.complete();
       }, error => {
         subscriber.error(error);

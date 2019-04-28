@@ -1,0 +1,15 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-10 offset-1">
+      <div class="col-4" *ngFor="let restaurant of restaurants">
+        <div class="card">
+          <div class="card-body">
+            <h1 class="restaurant-name">{{restaurant?.name}}</h1>
+            <hr class="m-2">
+            <p class="lead">{{restaurant?.description}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

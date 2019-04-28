@@ -13,6 +13,7 @@ import {SignupComponent} from './components/signup/signup.component';
 import {MenuComponent} from './components/menu/menu.component';
 import {MenuService} from './service/menu.service';
 import {DataService} from './service/data.service';
+import {RestaurantComponent} from './components/restaurant/restaurant.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {DataService} from './service/data.service';
     LoginComponent,
     SignupComponent,
     NavbarComponent,
-    MenuComponent
+    MenuComponent,
+    RestaurantComponent
   ],
   imports: [
     BrowserModule,

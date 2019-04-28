@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['/signup']);
   }
   loadUserSession(user: User) {
-    this.router.navigate(['/']);
+    this.router.navigate(['/home']);
   }
   loadLoginError(message: any) {
     console.error(message);

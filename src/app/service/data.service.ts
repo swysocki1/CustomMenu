@@ -48,7 +48,7 @@ export class DataService {
 
   /** Restaurant **/
   getRestaurants() {
-    this.get('/restaurant');
+    return this.get('/restaurant');
   }
   getRestaurant(id: number) {
     return this.get(`/restaurant/${id}`);
