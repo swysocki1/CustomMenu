@@ -28,14 +28,19 @@ export class RestaurantComponent implements OnInit {
   loadRestaurants(onlyMyRestaurants: boolean) {
     if (!this.user || !this.user.username) {
       this.router.navigate(['/login']);
+    } else if (onlyMyRestaurants) {
+      this.data.getRestaurantsByOwner(this.user.id).subscribe((restaurants: Restaurant[]) => {
+        this.restaurants = restaurants.sort((a, b) => {
+          return this.sort(a, b, true);
+        });
+      }, error => {
+        console.error(error);
+      });
     } else {
       this.data.getRestaurants().subscribe((restaurants: Restaurant[]) => {
-        if (onlyMyRestaurants) {
-          this.restaurants = restaurants.filter(restaurant => restaurant.owners.some(owner => owner.id === this.user.id));
-          this.restaurants = this.restaurants.sort((a, b) => {
-            return this.sort(a, b, true);
-          });
-        }
+        this.restaurants = restaurants.sort((a, b) => {
+          return this.sort(a, b, true);
+        });
       }, error => {
         console.error(error);
       });
@@ -45,32 +50,36 @@ export class RestaurantComponent implements OnInit {
   loadMenu(id: number) {
     this.router.navigate(['/menu/' + id]);
   }
-  sortMenus(restaurant: Restaurant, ascending: boolean) {
-    if (restaurant) {
-      if (restaurant.menus.length > 0) {
-        restaurant.menus = restaurant.menus.sort((a, b) => {
-          return this.sort(a.name, b.name, ascending);
-        });
-        restaurant.menus.forEach((menu: Menu, menuIndex) => {
-          if (menu.sections.length > 0) {
-            restaurant.menus[menuIndex].sections = menu.sections.sort((a, b) => {
-              return this.sort(a.order, b.order, ascending);
-            });
-            menu.sections.forEach((section: MenuSection, sectionId) => {
-              restaurant.menus[menuIndex].sections[sectionId].foods = section.foods.sort((a, b) => {
-                return this.sort(a.name, b.name, ascending);
-              });
-              section.foods.forEach((food: Food, foodIndex) => {
-                restaurant.menus[menuIndex].sections[sectionId].foods[foodIndex].addOns = food.addOns.sort((a, b) => {
-                  return this.sort(a.name, b.name, ascending);
-                });
-              });
-            });
-          }
-        });
-      }
+  canEditRestaurant(restaurant: Restaurant) {
+    if (restaurant && restaurant.owners && restaurant.owners.length > 0) {
+      return restaurant.owners.some(owner => owner.id === this.user.id);
+    } else {
+      return false;
     }
-    return restaurant;
+  }
+  loadMenuByRestaurant(restaurant: Restaurant) {
+    if (restaurant && restaurant.menus && restaurant.menus.length > 0) {
+      this.loadMenu(restaurant.menus[0].id);
+    }
+  }
+  startNewRestaurant() {
+    // TODO
+  }
+  editRestaurant(restaurant: Restaurant) {
+    //TODO
+  }
+  updateRestaurant(restaurant: Restaurant) {
+    this.data.updateRestaurant(restaurant).subscribe((update: Restaurant) => {
+      this.loadRestaurants(true);
+    }, error => {
+      console.error(error);
+    });
+  }
+  startNewMenu() {
+    //TODO
+  }
+  editMenu(menu: Menu) {
+    this.router.navigate(['menu-builder/' + menu.id]);
   }
   sort(a, b, ascending: boolean) {
     if (a === null) {

@@ -50,6 +50,9 @@ export class DataService {
   getRestaurants() {
     return this.get('/restaurant');
   }
+  getRestaurantsByOwner(userId: number) {
+    return this.get('/restaurant/byOwner/' + userId);
+  }
   getRestaurant(id: number) {
     return this.get(`/restaurant/${id}`);
   }
