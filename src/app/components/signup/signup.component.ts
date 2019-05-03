@@ -53,7 +53,7 @@ export class SignupComponent implements OnInit {
       newUser.password = this.account.value.password;
 
       this.ls.createAccount(newUser).subscribe((user: User) => {
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
         // TODO go to New User Signup Flow
       }, error => {
         console.error(error);

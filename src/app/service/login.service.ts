@@ -22,7 +22,20 @@ export class LoginService {
     this.getUserUpdates.emit(user);
   }
   createAccount(user: User) {
-    return this.data.createUser(user);
+    return new Observable(subscriber => {
+      this.data.createUser(user).subscribe(res => {
+        this.login(user.username, user.password).subscribe( user => {
+          subscriber.next(user);
+          subscriber.complete();
+        }, error => {
+          subscriber.error(error);
+          subscriber.complete();
+        });
+      }, error => {
+        subscriber.error(error);
+        subscriber.complete();
+      });
+    });
   }
   login(username: string, password: string): Observable<User> {
     return new Observable(subscriber => {
