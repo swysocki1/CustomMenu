@@ -17,12 +17,15 @@ export class RestaurantComponent implements OnInit {
   constructor(private router: Router, private ls: LoginService, private data: DataService) {}
   restaurants: Restaurant[] = [] as Restaurant[];
   user: User = new User();
+  restaurantModalId = 'create-new-restaurant-modal';
+  onlyMyRestaurants = true;
+  restaurant: Restaurant;
   ngOnInit() {
     this.user = this.ls.getUser();
-    this.loadRestaurants(true);
+    this.loadRestaurants(this.onlyMyRestaurants);
     this.ls.getUserUpdates.subscribe(user => {
       this.user = user;
-      this.loadRestaurants(true);
+      this.loadRestaurants(this.onlyMyRestaurants);
     });
   }
   loadRestaurants(onlyMyRestaurants: boolean) {
@@ -52,7 +55,7 @@ export class RestaurantComponent implements OnInit {
   }
   canEditRestaurant(restaurant: Restaurant) {
     if (restaurant && restaurant.owners && restaurant.owners.length > 0) {
-      return restaurant.owners.some(owner => owner.id === this.user.id);
+      return restaurant.owners.some(owner => owner === this.user.id);
     } else {
       return false;
     }
@@ -63,14 +66,28 @@ export class RestaurantComponent implements OnInit {
     }
   }
   startNewRestaurant() {
-    // TODO
+    this.restaurant = null;
+    $(`#${this.restaurantModalId}`).modal('show');
+  }
+  createNewRestaurant(r: any) {
+    console.log(r);
+    r = new Restaurant(r);
+    r.owners.push(this.user.id);
+    this.data.createRestaurant(r).subscribe(restaurant => {
+      this.loadRestaurants(this.onlyMyRestaurants);
+      $(`#${this.restaurantModalId}`).modal('hide');
+      this.restaurant = null;
+    });
   }
   editRestaurant(restaurant: Restaurant) {
-    //TODO
+    this.restaurant = restaurant;
+    $(`#${this.restaurantModalId}`).modal('show');
   }
   updateRestaurant(restaurant: Restaurant) {
     this.data.updateRestaurant(restaurant).subscribe((update: Restaurant) => {
       this.loadRestaurants(true);
+      $(`#${this.restaurantModalId}`).modal('hide');
+      this.restaurant = null;
     }, error => {
       console.error(error);
     });

@@ -40,7 +40,7 @@ export class Restaurant {
   description: string;
   name: string;
   menus: Menu[] = [] as Menu[];
-  owners: User[] = [] as User[];
+  owners: number[] = [] as number[];
   constructor(restaurant?: any) {
     if (restaurant) {
       this.id = restaurant.id;
@@ -52,12 +52,7 @@ export class Restaurant {
           this.menus.push(new Menu(menu));
         });
       }
-      this.owners = [];
-      if (restaurant.owners && restaurant.owners.length > 0) {
-        restaurant.owners.forEach(owner => {
-          this.owners.push(new User(owner));
-        });
-      }
+      this.owners = restaurant.owners ? restaurant.owners : [];
     }
   }
 }

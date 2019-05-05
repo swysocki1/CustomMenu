@@ -1,25 +1,37 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-10 offset-1">
-      <div class="col-4" *ngFor="let restaurant of restaurants">
-        <div class="card">
-          <div class="card-body">
-            <h1 class="restaurant-name">{{restaurant?.name}}</h1>
-            <hr class="m-2">
-            <p class="lead">{{restaurant?.description}}</p>
-          </div>
-          <div class="card-footer">
-            <button type="button" class="btn btn-secondary dropdown-toggle mx-2" data-toggle="dropdown" role="button"
-               aria-haspopup="true" aria-expanded="false">See Menu</button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" *ngFor="let menu of restaurant?.menus" (click)="loadMenu(menu?.id)">{{menu?.name}}</a>
+      <div class="row">
+        <div class="col-4 mb-4">
+          <div class="card pointer" (click)="startNewRestaurant()">
+            <div class="card-body text-center">
+              <div class="my-auto">
+                <i class="fa fa-fw fa-lg fa-2x fa-plus-circle grey5"></i>
+                <h1>Create New Restaurant</h1>
+              </div>
             </div>
-
-            <button type="button" class="btn btn-secondary mx-2" (click)="editMenu(restaurant)">Edit Menu(s)</button>
-            <button type="button" class="btn btn-secondary mx-2" (click)="editRestaurant(restaurant)" *ngIf="canEditRestaurant(restaurant)">EditRestaurant</button>
+          </div>
+        </div>
+        <div class="col-4" *ngFor="let restaurant of restaurants">
+          <div class="card">
+            <div class="card-body">
+              <h1 class="restaurant-name">{{restaurant?.name}}</h1>
+              <hr class="m-2">
+              <p class="lead">{{restaurant?.description}}</p>
+            </div>
+            <div class="card-footer">
+              <button type="button" class="btn btn-secondary dropdown-toggle mx-2" data-toggle="dropdown" role="button"
+                 aria-haspopup="true" aria-expanded="false">See Menu</button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" *ngFor="let menu of restaurant?.menus" (click)="loadMenu(menu?.id)">{{menu?.name}}</a>
+              </div>
+              <button type="button" class="btn btn-secondary mx-2" (click)="editRestaurant(restaurant)" *ngIf="canEditRestaurant(restaurant)">EditRestaurant</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+<app-modal [modalId]="restaurantModalId" [title]="'Create New Restaurant'" [priceRequired]="false" [editObj]="restaurant"
+           (createObj)="createNewRestaurant($event)" (updateObj)="updateRestaurant($event)"></app-modal>

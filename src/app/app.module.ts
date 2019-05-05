@@ -14,6 +14,7 @@ import {MenuComponent} from './components/menu/menu.component';
 import {MenuService} from './service/menu.service';
 import {DataService} from './service/data.service';
 import {RestaurantComponent} from './components/restaurant/restaurant.component';
+import {CreateNewModalComponent} from './components/createNewModal/createNewModal.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {RestaurantComponent} from './components/restaurant/restaurant.component'
     SignupComponent,
     NavbarComponent,
     MenuComponent,
-    RestaurantComponent
+    RestaurantComponent,
+    CreateNewModalComponent
   ],
   imports: [
     BrowserModule,
