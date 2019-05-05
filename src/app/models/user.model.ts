@@ -86,6 +86,7 @@ export class Menu {
 
 export class MenuSection {
   id: number;
+  menu?: number;
   name: string;
   description: string;
   order: number;
@@ -108,6 +109,7 @@ export class MenuSection {
 
 export class Food {
   id: number;
+  section?: number;
   name: string;
   description: string;
   imgSrc: string;
@@ -132,6 +134,7 @@ export class Food {
 
 export class AddOn {
   id: number;
+  food?: number;
   name: string;
   description: string;
   imgSrc: string;

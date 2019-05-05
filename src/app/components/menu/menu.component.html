@@ -2,7 +2,16 @@
   <div class="restaurant-region mt-5">
     <div class="title-region jumbotron-fluid">
       <h1 class="col-8 offset-2 text-center" style="display:inline-block;">{{restaurant?.name}}</h1>
-      <button class="pull-right btn btn-secondary mr-5" type="button"(click)="toggleEditMode()" *ngIf="canEdit()">{{editMode ? 'Disable ' : 'Enable '}} Edit Mode</button>
+      <button *ngIf="canEdit()" class="btn btn-primary pull-right dropdown-toggle mr-5" data-toggle="dropdown">Actions</button>
+      <div *ngIf="canEdit()" class="dropdown-menu">
+        <a class="dropdown-item pointer" (click)="toggleEditMode()">{{editMode ? 'Disable ' : 'Enable '}} Edit Mode</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item pointer" (click)="startNewRestaurant()">Edit Restaurant</a>
+        <a class="dropdown-item pointer" (click)="deleteRestaurant()">Delete Restaurant</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item pointer" (click)="startNewMenu(restaurant)">Edit Menu</a>
+        <a class="dropdown-item pointer" (click)="deleteMenu(restaurant, selectedMenu)">Delete Menu</a>
+      </div>
       <p class="col-8 offset-2 lead">{{restaurant?.description}}</p>
     </div>
 
@@ -20,7 +29,7 @@
         </li>
         <li class="nav-item text-center pointer">
           <a *ngIf="editMode" class="nav-link"
-             id="new-menu-tab" (click)="startNewMenu(restaurant?.id)"><i class="fa fa-fw fa-lg fa-plus-circle grey5"></i> Create New Menu</a>
+             id="new-menu-tab" (click)="startNewMenu(restaurant)"><i class="fa fa-fw fa-lg fa-plus-circle grey5"></i> Create New Menu</a>
         </li>
       </ul>
     </nav>
@@ -32,13 +41,25 @@
         <div class="row menu-section-region mb-5" *ngFor="let section of menu?.sections;let i = index">
           <div class="col-10 offset-1">
             <h3 class="menu-section-name">{{section?.name}}</h3>
+            <span *ngIf="editMode" (click)="startNewMenuSection(menu, section)" class="card-action edit pull-right pointer ml-2" data-toggle="tooltip" title="Edit Menu Section">
+              <i class="fas fa-fw fa-lg fa-pencil-alt coal"></i>
+            </span>
+                <span *ngIf="editMode" (click)="deleteMenuSection(section)" class="card-action delete pull-right pointer ml-2" data-toggle="tooltip" title="Delete Menu Section">
+              <i class="fa fa-fw fa-lg fa-times-circle red"></i>
+            </span>
             <hr class="my-2">
             <p class="lead">{{section?.description}}</p>
             <div class="row food-region">
               <div class="col-6" *ngFor="let food of section?.foods">
-                <div class="card pointer">
+                <div class="card">
                   <img [src]="food?.imgSrc" *ngIf="food?.imgSrc" class="card-img-top">
                   <div class="card-body">
+                    <span *ngIf="editMode" (click)="startNewFood(section, food)" class="card-action edit pull-right pointer ml-2" data-toggle="tooltip" title="Edit Food">
+                      <i class="fas fa-fw fa-lg fa-pencil-alt coal"></i>
+                    </span>
+                    <span *ngIf="editMode" (click)="deleteFood(section, food)" class="card-action delete pull-right pointer ml-2" data-toggle="tooltip" title="Delete Food">
+                      <i class="fa fa-fw fa-lg fa-times-circle red"></i>
+                    </span>
                     <h4 class="food-name" style="display: inline-block;">{{food?.name}}</h4>
                     <b class="pull-right" style="display: inline-block;" *ngIf="food?.price">${{food?.price | number:'0.2'}}</b>
                     <b class="pull-right" *ngIf="!food?.price">FREE</b>
@@ -47,17 +68,23 @@
                     <!--<button class="btn btn-primary" *ngIf="food?.addOns?.length > 0" type="button" data-toggle="collapse" [attr.data-target]="'#food-addon-region-'+menu.id+'-'+section.id+'-'+food.id" aria-expanded="false" aria-controls="collapseExample">-->
                       <!--Button with data-target-->
                     <!--</button>-->
-                    <i *ngIf="food?.addOns?.length > 0" class="fas fa-chevron-down" data-toggle="collapse" [attr.data-target]="'#food-addon-region-'+menu.id+'-'+section.id+'-'+food.id" aria-expanded="false" aria-controls="collapseExample"></i>
-                    <span *ngIf="food?.addOns?.length > 0"> Additions</span>
+                    <span *ngIf="food?.addOns?.length > 0 || editMode"  data-toggle="collapse" class="pointer"
+                          [attr.data-target]="'#food-addon-region-'+menu.id+'-'+section.id+'-'+food.id" aria-expanded="false"
+                          aria-controls="collapseExample"><i class="fas fa-chevron-down"></i> Additions</span>
                     <div class="collapse addon-region" [id]="'food-addon-region-'+menu.id+'-'+section.id+'-'+food.id">
                       <div class="mx-1 my-1" *ngFor="let addon of food.addOns">
                         <span class="addon-name">{{addon?.name}}</span>
                         <span *ngIf="addon?.description"> - {{addon?.description}}</span>
-                        <!--<i [attr.tooltip]="addon?.description" class="fas fa-fw fa-info-circle"></i>-->
+                        <span *ngIf="editMode" (click)="startNewFoodAddon(food, addon)" class="card-action edit pull-right pointer ml-2" data-toggle="tooltip" title="Edit Food Addon">
+                          <i class="fas fa-fw fa-lg fa-pencil-alt coal"></i>
+                        </span>
+                        <span *ngIf="editMode" (click)="deleteAddon(addon)" class="card-action delete pull-right pointer ml-2" data-toggle="tooltip" title="Delete Food Addon">
+                          <i class="fa fa-fw fa-lg fa-times-circle red"></i>
+                        </span>
                         <b class="pull-right" *ngIf="addon?.price">${{addon?.price | number:'0.2'}}</b>
                         <b class="pull-right" *ngIf="!addon?.price">FREE</b>
                       </div>
-                      <div class="mx-1 my-1" *ngIf="editMode" (click)="startNewAddon(food?.id)">
+                      <div class="mx-1 my-1" *ngIf="editMode" (click)="startNewFoodAddon(food)">
                         <i class="fa fa-fw fa-lg fa-plus-circle grey5"></i> Create New Add-On
                       </div>
                     </div>
@@ -66,7 +93,7 @@
                 </div>
               </div>
               <div class="col-6">
-                <div class="card pointer text-center" (click)="startNewFood(section?.id)" *ngIf="editMode">
+                <div class="card pointer text-center" (click)="startNewFood(section)" *ngIf="editMode">
                   <div class="card-body">
                     <h1><i class="fa fa-fw fa-lg fa-1x fa-plus-circle grey5"></i> Create New Food</h1>
                   </div>
@@ -75,7 +102,7 @@
             </div>
           </div>
         </div>
-        <div class="row mb-5" (click)="startNewMenuSection(menu?.id)" *ngIf="editMode">
+        <div class="row mb-5" (click)="startNewMenuSection(menu)" *ngIf="editMode">
           <div class="col-10 offset-1">
             <div class="card pointer text-center">
               <div class="card-body">
@@ -107,5 +134,5 @@
     </div>-->
   </div>
 </div>
-<app-modal [modalId]="restaurantModalId" [modalOptions]="modalOptions" [editObj]="restaurant"
-           (createObj)="createNewRestaurant($event)" (updateObj)="updateRestaurant($event)"></app-modal>
+<app-modal [modalId]="restaurantModalId" [modalOptions]="modalOptions" [editObj]="editObj"
+           (createObj)="updateObj($event)" (updateObj)="updateObj($event)"></app-modal>

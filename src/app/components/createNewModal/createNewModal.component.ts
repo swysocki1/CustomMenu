@@ -49,11 +49,13 @@ export class CreateNewModalComponent implements OnInit, OnChanges {
     const newObj = {
       name: this.modal.value.name,
       description: this.modal.value.description,
-      price: this.modal.value.price
+      price: this.modal.value.price,
+      imgSrc: this.modal.value.imgSrc
     };
     newObj['name'] = this.modal.value.name;
     newObj['description'] = this.modal.value.description;
     newObj['price'] = this.modal.value.price;
+    newObj['imgSrc'] = this.modal.value.imgSrc;
     if (this.editObj) {
       newObj['id'] = this.editObj.id;
       this.updateObj.emit(newObj);
@@ -71,4 +73,5 @@ export class ModalOptions {
   title: string;
   requirePrice: boolean;
   requireImg: boolean;
+  currentClass?: string;
 }

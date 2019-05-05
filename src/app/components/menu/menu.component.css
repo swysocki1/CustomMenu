@@ -2,6 +2,9 @@
 .menu-region{
   background-color: #ddd;
 }
+.menu-section-name {
+  display: inline;
+}
 .menu-description {
   text-align: justify;
   text-align-last: center;
@@ -12,6 +15,18 @@
 }
 .food-region .card {
   min-height: 100%;
+}
+.card-img-top {
+  width: 100%;
+  height: 15vw;
+  object-fit: cover;
+}
+.card-action {
+  display: inline-block;
+  opacity:.93;
+}
+.card-action:hover {
+  opacity:1;
 }
 /** CART REGION **/
 .cart-region {
