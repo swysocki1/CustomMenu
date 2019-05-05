@@ -13,7 +13,7 @@ declare var $: any;
 export class CreateNewModalComponent implements OnInit, OnChanges {
   constructor(private vs: ValidationService, private fb: FormBuilder) {}
   @Input() modalId: string;
-  @Input() title: string;
+  @Input() modalOptions: ModalOptions;
   @Input() editObj: any;
   @Input() priceRequired: boolean;
   @Output() createObj = new EventEmitter();
@@ -31,7 +31,8 @@ export class CreateNewModalComponent implements OnInit, OnChanges {
     let newObj = {
       name: '',
       description: '',
-      price: 0
+      price: 0,
+      imgSrc: ''
     };
     if (this.editObj) {
       newObj = {... this.editObj};
@@ -39,7 +40,8 @@ export class CreateNewModalComponent implements OnInit, OnChanges {
     this.modal = this.fb.group({
       name: [newObj.name, Validators.required],
       description: [newObj.description, Validators.required],
-      price: [newObj.price]
+      price: [newObj.price],
+      imgSrc: [newObj.imgSrc]
     });
   }
   onSubmit() {
@@ -53,6 +55,7 @@ export class CreateNewModalComponent implements OnInit, OnChanges {
     newObj['description'] = this.modal.value.description;
     newObj['price'] = this.modal.value.price;
     if (this.editObj) {
+      newObj['id'] = this.editObj.id;
       this.updateObj.emit(newObj);
     } else {
       this.createObj.emit(newObj);
@@ -63,4 +66,9 @@ export class CreateNewModalComponent implements OnInit, OnChanges {
       this.loadForm();
     }
   }
+}
+export class ModalOptions {
+  title: string;
+  requirePrice: boolean;
+  requireImg: boolean;
 }

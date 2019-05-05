@@ -13,10 +13,12 @@ declare var $: any;
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
-  constructor(private route: ActivatedRoute, private ms: MenuService) {}
+  constructor(private route: ActivatedRoute, private ms: MenuService, private ls: LoginService) {}
   restaurant: Restaurant;
   selectedMenu: number;
   cart: CartItem[];
+  editMode = false;
+  restaurantModalId = 'create-new-restaurant-modal';
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.loadMenu(parseInt(params.get('id')));
@@ -102,5 +104,18 @@ export class MenuComponent implements OnInit {
         this.cart.splice(this.cart.findIndex(cartItem => cartItem.item.id === item.id), 1);
       }
     }
+  }
+
+  // EDIT MODE
+  canEdit() {
+    const user = this.ls.getUser();
+    if (!this.restaurant || !this.restaurant.id || !this.restaurant.owners || !user || !user.id) {
+      return false;
+    } else {
+      return user && this.restaurant.owners.some(owner => owner.id === user.id);
+    }
+  }
+  toggleEditMode() {
+    this.editMode = !this.editMode;
   }
 }

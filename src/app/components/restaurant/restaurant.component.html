@@ -20,12 +20,15 @@
               <p class="lead">{{restaurant?.description}}</p>
             </div>
             <div class="card-footer">
-              <button type="button" class="btn btn-secondary dropdown-toggle mx-2" data-toggle="dropdown" role="button"
+              <button type="button" class="btn btn-sm btn-secondary dropdown-toggle mx-2" data-toggle="dropdown" role="button"
                  aria-haspopup="true" aria-expanded="false">See Menu</button>
               <div class="dropdown-menu">
                 <a class="dropdown-item" *ngFor="let menu of restaurant?.menus" (click)="loadMenu(menu?.id)">{{menu?.name}}</a>
+                <a class="dropdown-item" (click)="startNewMenu(restaurant)">
+                  <i class="fa fa-fw fa-lg fa-plus-circle grey5"></i> Create New Menu
+                </a>
               </div>
-              <button type="button" class="btn btn-secondary mx-2" (click)="editRestaurant(restaurant)" *ngIf="canEditRestaurant(restaurant)">EditRestaurant</button>
+              <button type="button" class="btn btn-secondary btn-sm mx-2" (click)="editRestaurant(restaurant)" *ngIf="canEditRestaurant(restaurant)">EditRestaurant</button>
             </div>
           </div>
         </div>
@@ -33,5 +36,7 @@
     </div>
   </div>
 </div>
-<app-modal [modalId]="restaurantModalId" [title]="'Create New Restaurant'" [priceRequired]="false" [editObj]="restaurant"
+<app-modal [modalId]="restaurantModalId" [modalOptions]="modalOptions" [editObj]="restaurant"
            (createObj)="createNewRestaurant($event)" (updateObj)="updateRestaurant($event)"></app-modal>
+<app-modal [modalId]="menuModalId" [modalOptions]="modalOptions"
+           (createObj)="createNewMenu($event)"></app-modal>

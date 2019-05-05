@@ -1,14 +1,15 @@
 <div class="container-fluid">
   <div class="restaurant-region mt-5">
     <div class="title-region jumbotron-fluid">
-      <h1 class="col-8 offset-2 text-center">{{restaurant?.name}}</h1>
+      <h1 class="col-8 offset-2 text-center" style="display:inline-block;">{{restaurant?.name}}</h1>
+      <button class="pull-right btn btn-secondary mr-5" type="button"(click)="toggleEditMode()" *ngIf="canEdit()">{{editMode ? 'Disable ' : 'Enable '}} Edit Mode</button>
       <p class="col-8 offset-2 lead">{{restaurant?.description}}</p>
     </div>
 
 
-    <nav *ngIf="restaurant?.menus?.length > 1" class="col-8 offset-2">
+    <nav class="col-8 offset-2">
       <ul class="nav nav-tabs">
-        <li class="nav-item" *ngFor="let menu of restaurant?.menus" [ngClass]="{'dropdown': menu?.sections?.length > 1}">
+        <li class="nav-item pointer" *ngFor="let menu of restaurant?.menus" [ngClass]="{'dropdown': menu?.sections?.length > 1}">
           <a *ngIf="menu?.sections?.length <= 1" class="nav-link" [ngClass]="{'active': menu?.id === selectedMenu}"
              [id]="'nav-menu-' + menu?.id" (click)="loadMenu(menu?.id)">{{menu?.name}}</a>
           <a *ngIf="menu?.sections?.length > 1" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
@@ -16,6 +17,10 @@
           <div *ngIf="menu?.sections?.length > 1" class="dropdown-menu">
             <a class="dropdown-item" *ngFor="let section of menu?.sections" (click)="selectMenuSection(menu, section)">{{section?.name}}</a>
           </div>
+        </li>
+        <li class="nav-item text-center pointer">
+          <a *ngIf="editMode" class="nav-link"
+             id="new-menu-tab" (click)="startNewMenu(restaurant?.id)"><i class="fa fa-fw fa-lg fa-plus-circle grey5"></i> Create New Menu</a>
         </li>
       </ul>
     </nav>
@@ -52,10 +57,29 @@
                         <b class="pull-right" *ngIf="addon?.price">${{addon?.price | number:'0.2'}}</b>
                         <b class="pull-right" *ngIf="!addon?.price">FREE</b>
                       </div>
+                      <div class="mx-1 my-1" *ngIf="editMode" (click)="startNewAddon(food?.id)">
+                        <i class="fa fa-fw fa-lg fa-plus-circle grey5"></i> Create New Add-On
+                      </div>
                     </div>
 
                   </div>
                 </div>
+              </div>
+              <div class="col-6">
+                <div class="card pointer text-center" (click)="startNewFood(section?.id)" *ngIf="editMode">
+                  <div class="card-body">
+                    <h1><i class="fa fa-fw fa-lg fa-1x fa-plus-circle grey5"></i> Create New Food</h1>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-5" (click)="startNewMenuSection(menu?.id)" *ngIf="editMode">
+          <div class="col-10 offset-1">
+            <div class="card pointer text-center">
+              <div class="card-body">
+                <h1><i class="fa fa-fw fa-lg fa-1x fa-plus-circle grey5"></i> Create New Menu Section</h1>
               </div>
             </div>
           </div>
@@ -83,3 +107,5 @@
     </div>-->
   </div>
 </div>
+<app-modal [modalId]="restaurantModalId" [modalOptions]="modalOptions" [editObj]="restaurant"
+           (createObj)="createNewRestaurant($event)" (updateObj)="updateRestaurant($event)"></app-modal>

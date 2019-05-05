@@ -6,6 +6,7 @@ import {ValidationService} from '../../service/validation.service';
 import {CartItem, Food, Menu, MenuSection, Restaurant, User} from '../../models/user.model';
 import {MenuService} from '../../service/menu.service';
 import {DataService} from '../../service/data.service';
+import {ModalOptions} from '../createNewModal/createNewModal.component';
 declare var $: any;
 
 @Component({
@@ -18,9 +19,13 @@ export class RestaurantComponent implements OnInit {
   restaurants: Restaurant[] = [] as Restaurant[];
   user: User = new User();
   restaurantModalId = 'create-new-restaurant-modal';
+  menuModalId = 'create-new-menu-modal';
   onlyMyRestaurants = true;
   restaurant: Restaurant;
+  modalOptions: ModalOptions = new ModalOptions();
   ngOnInit() {
+    this.modalOptions.requireImg = false;
+    this.modalOptions.requirePrice = false;
     this.user = this.ls.getUser();
     this.loadRestaurants(this.onlyMyRestaurants);
     this.ls.getUserUpdates.subscribe(user => {
@@ -54,8 +59,9 @@ export class RestaurantComponent implements OnInit {
     this.router.navigate(['/menu/' + id]);
   }
   canEditRestaurant(restaurant: Restaurant) {
+    console.log(restaurant);
     if (restaurant && restaurant.owners && restaurant.owners.length > 0) {
-      return restaurant.owners.some(owner => owner === this.user.id);
+      return restaurant.owners && restaurant.owners.some(owner => owner.id === this.user.id);
     } else {
       return false;
     }
@@ -66,20 +72,22 @@ export class RestaurantComponent implements OnInit {
     }
   }
   startNewRestaurant() {
-    this.restaurant = null;
+    this.restartModal();
+    this.modalOptions.title = 'Create New Restaurant';
     $(`#${this.restaurantModalId}`).modal('show');
   }
   createNewRestaurant(r: any) {
-    console.log(r);
     r = new Restaurant(r);
     r.owners.push(this.user.id);
     this.data.createRestaurant(r).subscribe(restaurant => {
       this.loadRestaurants(this.onlyMyRestaurants);
       $(`#${this.restaurantModalId}`).modal('hide');
-      this.restaurant = null;
+      this.restartModal();
     });
   }
   editRestaurant(restaurant: Restaurant) {
+    this.restartModal();
+    this.modalOptions.title = `Modify: ${restaurant.name}`;
     this.restaurant = restaurant;
     $(`#${this.restaurantModalId}`).modal('show');
   }
@@ -87,16 +95,34 @@ export class RestaurantComponent implements OnInit {
     this.data.updateRestaurant(restaurant).subscribe((update: Restaurant) => {
       this.loadRestaurants(true);
       $(`#${this.restaurantModalId}`).modal('hide');
-      this.restaurant = null;
+      this.restartModal();
     }, error => {
       console.error(error);
     });
   }
-  startNewMenu() {
-    //TODO
+  startNewMenu(restaurant: Restaurant) {
+    this.restartModal();
+    this.modalOptions.title = 'Create New Menu';
+    this.restaurant = restaurant;
+    $(`#${this.menuModalId}`).modal('show');
   }
   editMenu(menu: Menu) {
     this.router.navigate(['menu-builder/' + menu.id]);
+  }
+  createNewMenu(menu: Menu) {
+    menu = new Menu(menu);
+    menu.restaurant = this.restaurant.id;
+    this.data.createMenu(menu).subscribe((res: any) => {
+      $(`#${this.menuModalId}`).modal('hide');
+      this.restartModal();
+      this.loadRestaurants(this.onlyMyRestaurants);
+    }, error => {
+      console.error(error);
+    });
+  }
+  restartModal() {
+    this.restaurant = null;
+    this.modalOptions.title = '';
   }
   sort(a, b, ascending: boolean) {
     if (a === null) {

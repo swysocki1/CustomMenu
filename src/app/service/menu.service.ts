@@ -20,7 +20,7 @@ export class MenuService {
       this.data.getMenu(id).subscribe((menu: Menu) => {
         if (menu && menu.restaurant) {
           this.data.getRestaurant(menu.restaurant).subscribe((restaurant: Restaurant) => {
-            subscriber.next(restaurant);
+            subscriber.next(new Restaurant(restaurant));
             subscriber.complete();
           });
         } else {

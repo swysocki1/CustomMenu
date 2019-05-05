@@ -6,6 +6,7 @@ export class User {
   lastName: string;
   email: string;
   password?: string;
+  restaurant?: number;
   constructor(user?: any) {
     if (user) {
       this.id = user.id;
@@ -16,6 +17,7 @@ export class User {
       this.email = user.email;
       this.photoURL = user.photoURL;
       this.password = user.password;
+      this.restaurant = user.restaurant;
     }
   }
 }
@@ -40,7 +42,7 @@ export class Restaurant {
   description: string;
   name: string;
   menus: Menu[] = [] as Menu[];
-  owners: number[] = [] as number[];
+  owners: User[] = [] as User[];
   constructor(restaurant?: any) {
     if (restaurant) {
       this.id = restaurant.id;
@@ -52,7 +54,12 @@ export class Restaurant {
           this.menus.push(new Menu(menu));
         });
       }
-      this.owners = restaurant.owners ? restaurant.owners : [];
+      this.owners = [];
+      if (restaurant.owners && restaurant.owners.length > 0) {
+        restaurant.owners.forEach(owner => {
+          this.owners.push(new User(owner));
+        });
+      }
     }
   }
 }
