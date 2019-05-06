@@ -57,7 +57,7 @@
                     <span *ngIf="editMode" (click)="startNewFood(section, food)" class="card-action edit pull-right pointer ml-2" data-toggle="tooltip" title="Edit Food">
                       <i class="fas fa-fw fa-lg fa-pencil-alt coal"></i>
                     </span>
-                    <span *ngIf="editMode" (click)="deleteFood(section, food)" class="card-action delete pull-right pointer ml-2" data-toggle="tooltip" title="Delete Food">
+                    <span *ngIf="editMode" (click)="deleteFood(food)" class="card-action delete pull-right pointer ml-2" data-toggle="tooltip" title="Delete Food">
                       <i class="fa fa-fw fa-lg fa-times-circle red"></i>
                     </span>
                     <h4 class="food-name" style="display: inline-block;">{{food?.name}}</h4>
